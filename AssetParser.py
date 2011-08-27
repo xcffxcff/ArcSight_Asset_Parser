@@ -5,9 +5,10 @@ import dns.resolver, dns.reversename
 from dns.resolver import NXDOMAIN
 from dns.exception import DNSException, Timeout
 
-
+__progname__ = "ArcSight Asset Parser"
 __version__ = "0.8.3"
 __author__ = "Robert McGinley"
+__description__ = "Parses Excel and CSV files for information to build a valid ArcSight ESM asset import CSV file."
 
 """------------------------------------------------"""
 """      Description                               """
@@ -42,9 +43,20 @@ Todo (In no particular order):
 
 """
 
-argParser = argparse.ArgumentParser(prog="ArcSight Asset Parser", usage="",description="Parses Excel and CSV files for information to build a valid ArcSight Asset Import CSV file",epilog="",add_help=True)
-argParser.add_argument('-i, --inputfile',)
 # TODO: Use getopts/argparse module to retrieve each of these variables from the command line instead of statically defining them here.
+# Working on it :)
+#argParser.add_argument('','')
+argParser = argparse.ArgumentParser(prog=__progname__,description=__description__,epilog="",add_help=True)
+argParser.add_argument('inputfile',type=str,default=None,help="Input file to parse")
+argParser.add_argument('outputfile',type=str,default=None,help="Output CSV file")
+argParser.add_argument('-d','--dns-lookup',action='store_true',help="If a discovered IP address does not have an associated hostname, attempt a DNS lookup on the IP to identify the proper hostname (Useful if program is run on the associated internal network) - DEFAULT: False")
+argParser.add_argument('-s','--strip-domain',action='store_true',help="When a hostname is discovered via DNS lookup, remove the domain name suffix from the discovered value - DEFAULT: False")
+argParser.add_argument('-p','--preferdomain',type=str,help="If there are multiple hostname results found on differing domains, prefer results from the specified domain")
+argParser.add_argument('-n','--nameservers', action='append',type=list,nargs="+",help="DNS nameservers to query (If not specified, system nameservers will be used)")
+argParser.add_argument('-D','--debug',action='store_true',help="Enable debugging messages (Noisy but informative)")
+argParser.add_argument('-v','--version', action='version', version='%(prog)s __version__',help="Display this programs version")
+argParser.parse_args()
+
 # Set script specific variables here.
 # Input file to parse
 inputFileName = ".\Event_Source_Asset_Model_-_FROZEN_July_4 - Script Testing.xls"
