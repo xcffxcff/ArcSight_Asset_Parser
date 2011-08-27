@@ -55,7 +55,7 @@ argParser.add_argument('-p','--preferdomain',type=str,help="If there are multipl
 argParser.add_argument('-n','--nameservers', action='append',type=list,nargs="+",help="DNS nameservers to query (If not specified, system nameservers will be used)")
 argParser.add_argument('-D','--debug',action='store_true',help="Enable debugging messages (Noisy but informative)")
 argParser.add_argument('-v','--version', action='version', version='%(prog)s __version__',help="Display this programs version")
-argParser.parse_args()
+#argParser.parse_args()
 
 # Set script specific variables here.
 # Input file to parse
